@@ -5,7 +5,7 @@
 
 (defvar *client-srv* nil "ROS service to the ontology client")
 
-(defun init (name)
+(defun init-client (name)
 """Constructs a ROS client linked to the service name(str)."""
 (setf *client-srv* (concatenate 'string "ontologenius/" name )))
 
