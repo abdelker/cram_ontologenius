@@ -47,3 +47,29 @@
 
             (call-str "getName" param)
             ))
+
+(defun get-names (name &optional (take-id t))
+    """Gives all the labels (str[]) of the concept name(str) excepted the muted ones.
+        The default take_id(bool) argument can be set to False if you do not want to
+        consider the concept identifier as a possible default name.
+        The result of this function depends on the setting of the working language."""
+    (let ((param name))
+        (cond 
+            ((eql take-id nil)
+                (setq param (concatenate 'string param " -i false"))))
+
+            (call "getNames" param)
+            ))
+
+(defun get-every-names (name &optional (take-id t))
+    """Gives all the labels (str[]) of the concept name(str) even the muted ones.
+        The default take_id(bool) argument can be set to False if you do not want to
+        consider the concept identifier as a possible default name.
+        The result of this function depends on the setting of the working language."""
+    (let ((param name))
+        (cond 
+            ((eql take-id nil)
+                (setq param (concatenate 'string param " -i false"))))
+
+            (call "getEveryNames" param)
+            ))
