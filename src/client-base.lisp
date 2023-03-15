@@ -89,9 +89,10 @@
                 ((response-values (msg-slot-value (call-client-srv action param) :values)))
                 (cond 
                     ((> (length response-values) 0)
-                        (return (nth 0 response-values)))
+                        (value (nth 0 response-values)))
 
-                    (retrun ""))))
+                    ((value ""))
+                    )))
 
         (roslisp::ros-rpc-error () 
             (cond
@@ -113,9 +114,10 @@
                                     (print error-message)))
                         
                         ((> (length response-values) 0)
-                            (return (nth 0 response-values)))
+                            (value (nth 0 response-values)))
 
-                        (retrun ""))))
+                        ((value ""))
+                        )))
 
                 (roslisp::ros-rpc-error () 
                     (cond
