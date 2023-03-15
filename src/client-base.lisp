@@ -1,18 +1,21 @@
 (in-package :onto)
 
-(defvar *verbose* ni)
+(defvar *verbose* nil)
 (defvar *cpt* 0)
 
 (defvar *client-srv* nil "ROS service to the ontology client")
+(defvar *name* nil)
+
 
 (defun init-client (name)
 """Constructs a ROS client linked to the service name(str)."""
-(setf *client-srv* (concatenate 'string "ontologenius/" name )))
+    (setf *name* name)
+    (setf *client-srv* (concatenate 'string "ontologenius/" *name* )))
 
 (defun call-client-srv (action param)
   "Function to call the ontology client service."
   (call-service *client-srv*
-                'ontologenius/OntologeniusService
+                'ontologenius-srv:OntologeniusService
                 :action action
                 :param param
                 )) 
@@ -32,27 +35,54 @@
     (setf *verbose* verbose))
 
 (defun call (action param)
- """Call the service set up in the constructor of ClientBase with the request
-           defined with action(str) and param(str) and returns all the results (str[]).
-           If the service call fails, the function returns None
-        """
-        (setf *cpt* (+ 1 *cpt*))
-        (handler-case 
-            (progn 
-                (setq response-cient-srv (call-client-srv action param))
-                (setq values (slot-value response-client-srv 'ontologenius-msg:values))
-                (return values)
-        )
-        )
- ;;TODO failure handling of service 
-)
+    """Call the service set up in the constructor of ClientBase with the request
+    defined with action(str) and param(str) and returns all the results (str[]).
+    If the service call fails, the function returns None"""
+
+    (setf *cpt* (+ 1 *cpt*))
+
+    (handler-case 
+        (progn 
+            (let
+                ((values (msg-slot-value (call-client-srv action param) :values)))
+                (value values)))
+
+        (roslisp::ros-rpc-error () 
+            (cond
+                ((eql *verbose* t)
+                    (let ((error-message (concatenate 'string "Failure to call ontologenius/" *name* )))
+                            (print error-message)))
+
+                ((setf *client-srv* (concatenate 'string "ontologenius/" *name* ))))
+
+            (handler-case
+                (progn 
+                    (let
+                        ((values (msg-slot-value (call-client-srv action param) :values)))
+                        
+
+                    (cond
+                        ((eql *verbose* t)
+                            (let ((error-message (concatenate 'string "Restored ontologenius/" *name* )))
+                                    (print error-message)))
+
+                        ((value values)))))
+
+                (roslisp::ros-rpc-error () 
+                    (cond
+                        ((eql *verbose* t)
+                            (print "Failure of service restoration"))
+
+                        (nil))
+
+                    )))))
+
 
 (defun call-str (action param)
- """Call the service set up in the constructor of ClientBase with the request
-           defined with action(str) and param(str) and returns all the first result (str).
-           If the service call fails, the function returns None
-        """
-        (setf *cpt* (+ 1 *cpt*))
+    """Call the service set up in the constructor of ClientBase with the request
+    defined with action(str) and param(str) and returns all the first result (str).
+    If the service call fails, the function returns None"""
+    (setf *cpt* (+ 1 *cpt*))
         (handler-case 
             (progn 
                 (setq response-cient-srv (call-client-srv action param))
@@ -61,7 +91,7 @@
                     ((> (length values) 0)
                      (return (nth 0 values)))
                     ((return ""))
-                
+        (roslisp::ros-rpc-error () (print "failed to connect"))        
         )
             )))
 
