@@ -1,6 +1,6 @@
 (in-package :onto)
 
-(defun init-onto (name)
+(defun init-onto-client (name)
     """Constructs an ontology client linked to the service ontologenius/name(str)."""
     (init-client name)
 )
@@ -24,8 +24,7 @@
                 (setq param (concatenate 'string param " -s " selector)))
             
             ((>= depth 0)
-                (setq param (concatenate 'string param " -d " 
-                ;;(format nil "~a" depth)
+                (setq param (concatenate 'string param " -d " (write-to-string depth)
                 ))))
 
             (call "getUp" param)
