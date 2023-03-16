@@ -13,9 +13,9 @@
     (call "list" "")
 )
 
-(defun add (name)
-"""Create an ontology instance named name(str).s
-           Returns False if the service call fails.
+(defun add-manage (name)
+    """Create an ontology instance named name(str).s
+        Returns False if the service call fails.
         """
     (call-nr "add" name)
 )

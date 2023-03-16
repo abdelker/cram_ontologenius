@@ -1,6 +1,6 @@
 (in-package :onto)
 
-(defun init-ind-client(name)
+(defun init-indiv-client(name)
     """Constructs an class client.
         Can be used in a multi-ontology mode by specifying the name of the ontology name(str).
         For classic use, name should be defined as"""

@@ -28,6 +28,13 @@
               (:file "client-base" :depends-on ("package"))
               (:file "manager-client" :depends-on ("package"
                                                    "client-base"))
+             ;; (:file "feed-publisher" :depends-on ("package"))
+              (:file "ontology-manipulator" :depends-on ("package"
+                                                        ;; "feed-publisher"
+                                                         ))
+              (:file "ontologies-manipulator" :depends-on ("package"
+                                                         "ontology-manipulator"
+                                                         "manager-client"))                                       
              )))
   )
 
