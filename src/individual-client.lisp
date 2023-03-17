@@ -31,18 +31,17 @@
     
 )
 
-
-(defun init-ind-client(name)
-    """Constructs an class client.
-        Can be used in a multi-ontology mode by specifying the name of the ontology name(str).
-        For classic use, name should be defined as"""
-    (cond 
-            ((string= name "")
-                (init-onto-client "individual"))
+;; (defun init-ind-client(name)
+;;     """Constructs an class client.
+;;         Can be used in a multi-ontology mode by specifying the name of the ontology name(str).
+;;         For classic use, name should be defined as"""
+;;     (cond 
+;;             ((string= name "")
+;;                 (init-onto-client "individual"))
             
-            ((init-onto-client (concatenate 'string "individual/" name)))
+;;             ((init-onto-client (concatenate 'string "individual/" name)))
 
-                ))
+;;                 ))
 
 (defun get-on (name property &optional (selector ""))
     """Gives all the individuals (str[]) pointed by the property property(str) and applied to the individual name(str).
