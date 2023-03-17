@@ -1,9 +1,33 @@
 (in-package :onto)
 
-(defun init-onto-client (name)
+(defclass onto-client (client-base)
+    (
+        (client-name
+        :initarg :client-name
+        :initform (error "Must supply a service name."))
+        )
+    )
+
+(defmethod initialize-instance :after ((client onto-client) &key)
     """Constructs an ontology client linked to the service ontologenius/name(str)."""
-    (init-client name)
+    (let ((client-name (slot-value client 'client-name)))
+        (let ((onto-client (make-instance 'client-base :client-name client-name)))
+
+        (initialize-instance onto-client)))
+    
 )
+
+;; (defun init-onto-client ()
+;;     """Constructs a manager client.
+;;     Can only be used in a multi-ontology mode."""
+;;     (initialize-instance *onto-client*)
+
+;; )
+
+;; (defun init-onto-client (name)
+;;     """Constructs an ontology client linked to the service ontologenius/name(str)."""
+;;     (init-client name)
+;; )
 
 (defun return-param (name take-id )
     (let ((param name))
