@@ -1,10 +1,22 @@
 (in-package :onto)
 
+;; (defun init-manager ()
+;; """Constructs a manager client.
+;;            Can only be used in a multi-ontology mode.
+;;         """
+;; (init-client "manage")
+
+;; )
+
+(defparameter *manager-client*
+    (make-instance 'client-base :client-name "manage")
+)
+
 (defun init-manager ()
 """Constructs a manager client.
            Can only be used in a multi-ontology mode.
         """
-(init-client "manage")
+    (initialize-instance *manager-client*)
 
 )
 
