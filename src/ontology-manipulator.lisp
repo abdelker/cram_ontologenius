@@ -18,6 +18,7 @@
 
 (defmethod initialize-instance :before ((onto-man ontology-manipulator) &key)
     "Constructs a ROS client linked to the service name(str)."
+
     (let ((name (slot-value onto-man 'name)) (service-name (slot-value onto-man 'service-name)))
             (setf (slot-value onto-man 'individual-client)
                 (make-instance 'individual-client :individual-name name))
@@ -39,9 +40,9 @@
     
 )
 
-;; (defun init-ontology-man (&optional (name ""))
+;; (defun init-onto-manlogy-man (&optional (name ""))
 ;;     "Constructs an ontology manipulator with.
-;;         Can be used in a multi-ontology mode by specifying the name of the ontology name(str). For classic use, do not specify the ontology name name."
+;;         Can be used in a multi-onto-manlogy mode by specifying the name of the ontology name(str). For classic use, do not specify the ontology name name."
 ;;     (init-indiv-client name)
 ;;     (init-action-client name)
 ;;     (let ((service-name "ontologenius/sparql"))
@@ -54,28 +55,28 @@
 ;;     )
 ;; )
 
-(defun nb-onto ()
+(defun nb-onto-man ()
     "Gives the total number (int) of service calls from all ROS clients instances since the last reset"
 
-            (nb)
-            )
+    (nb)
+)
 
-(defun reset-nb-onto ()
+(defun reset-nb-onto-man ()
     "Reset the call counter for all instances of ROS clients."
 
-            (reset-nb)
-            )
+    (reset-nb)
+)
 
-(defun close-onto ()
+(defun close-onto-man()
     "Same as the ActionClient closing function. Link all the concepts loaded from files and the Internet. Before closing an ontology, exploration requests are not allowed.
-        Returns False if the service call fails."
+    Returns False if the service call fails."
 
-            (close)
-            )
+    (close-onto)
+)
 
-(defun set-verbose-onto (verbose)
+(defun set-verbose-onto-man (verbose)
     "Same as the ActionClient closing function. Link all the concepts loaded from files and the Internet. Before closing an ontology, exploration requests are not allowed.
-        Returns False if the service call fails."
+    Returns False if the service call fails."
 
-            (set-verbose verbose)
-            )
+    (set-verbose verbose)
+)

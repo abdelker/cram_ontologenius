@@ -35,13 +35,13 @@
                                                     "client-base"))
 
               (:file "action-client" :depends-on ("package"
-                                                  "client-base"))))))
+                                                  "client-base"))
 
-              ;; (:file "individual-client" :depends-on ("package"
-              ;;                                         "manager-client"))
+              (:file "individual-client" :depends-on ("package"
+                                                      "manager-client"))
 
-              ;; (:file "ontology-manipulator" :depends-on ("package" "individual-client" "action-client")) 
+              (:file "ontology-manipulator" :depends-on ("package" "individual-client" "action-client")) 
               
-              ;; (:file "ontologies-manipulator" :depends-on ("package" "ontology-manipulator" "manager-client"))))))
+              (:file "ontologies-manipulator" :depends-on ("package" "ontology-manipulator" "manager-client"))))))
               
   
