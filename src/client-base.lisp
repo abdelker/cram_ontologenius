@@ -38,7 +38,7 @@
 
 (defun call-client-srv (action param)
     "Function to call the ontology client service."
-  (call-service *client-srv*
+  (roslisp:call-service *client-srv*
                 'ontologenius-srv:OntologeniusService
                 :action action
                 :param param
@@ -46,7 +46,7 @@
 
 (defun nb ()
     """Gives the total number (int) of service calls from all ClientBase instances since the last reset."""
-    (return *cpt*))
+    (values *cpt*))
 
 (defun reset-nb ()
     """Reset Call Counter for all instances of ClientBase."""
@@ -67,8 +67,8 @@
     (handler-case 
         (progn 
             (let
-                ((response-values (msg-slot-value (call-client-srv action param) :values)))
-                (value response-values)))
+                ((response-values (roslisp:msg-slot-value (call-client-srv action param) :values)))
+                (values response-values)))
 
         (roslisp::ros-rpc-error () 
             (cond
@@ -81,7 +81,7 @@
             (handler-case
                 (progn 
                     (let
-                        ((response-values (msg-slot-value (call-client-srv action param) :values)))
+                        ((response-values (roslisp:msg-slot-value (call-client-srv action param) :values)))
                         
 
                     (cond
@@ -89,7 +89,7 @@
                             (let ((error-message (concatenate 'string "Restored ontologenius/" *name* )))
                                     (print error-message)))
 
-                        ((value response-values)))))
+                        ((values response-values)))))
 
                 (roslisp::ros-rpc-error () 
                     (cond
@@ -110,12 +110,12 @@
     (handler-case 
         (progn 
             (let
-                ((response-values (msg-slot-value (call-client-srv action param) :values)))
+                ((response-values (roslisp:msg-slot-value (call-client-srv action param) :values)))
                 (cond 
                     ((> (length response-values) 0)
-                        (value (nth 0 response-values)))
+                        (values (nth 0 response-values)))
 
-                    ((value ""))
+                    ((values ""))
                     )))
 
         (roslisp::ros-rpc-error () 
@@ -129,7 +129,7 @@
             (handler-case
                 (progn 
                     (let
-                        ((response-values (msg-slot-value (call-client-srv action param) :values)))
+                        ((response-values (roslisp:msg-slot-value (call-client-srv action param) :values)))
                         
 
                     (cond
@@ -138,9 +138,9 @@
                                     (print error-message)))
                         
                         ((> (length response-values) 0)
-                            (value (nth 0 response-values)))
+                            (values (nth 0 response-values)))
 
-                        ((value ""))
+                        ((values ""))
                         )))
 
                 (roslisp::ros-rpc-error () 
@@ -164,7 +164,7 @@
             (progn 
                 (let
                     ((response (call-client-srv action param)))
-                    (t)))
+                    (values t)))
 
             (roslisp::ros-rpc-error () 
                 (cond
@@ -183,9 +183,9 @@
                         (cond
                             ((eql *verbose* t)
                                 (let ((error-message (concatenate 'string "Restored ontologenius/" *name* )))
-                                        (print error-message)))
+                                        (print error-message))))
 
-                            (t))))
+                            (values t)))
 
                     (roslisp::ros-rpc-error () 
                         (cond
@@ -207,8 +207,8 @@
     (handler-case 
         (progn 
             (let
-                ((response-code (msg-slot-value (call-client-srv action param) :code)))
-                ((response-code 0))))
+                ((response (call-client-srv action param)))
+                (let ((response-code (roslisp:msg-slot-value response :code))))))
 
         (roslisp::ros-rpc-error () 
             (cond
@@ -221,7 +221,7 @@
             (handler-case
                 (progn 
                     (let
-                        ((response-code (msg-slot-value (call-client-srv action param) :code)))
+                        ((response-code (roslisp:msg-slot-value (call-client-srv action param) :code)))
                         
 
                     (cond
