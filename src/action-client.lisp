@@ -12,7 +12,7 @@
         )
     )
 
-(defparameter actions-client nil)
+(defparameter action-client nil)
 
 (defmethod initialize-instance :after ((client action-client) &key)
     """Constructs an action client.
@@ -23,12 +23,12 @@
     
         (cond 
             ((string= actions-name "")
-                (setf actions-client (make-instance 'base-client :client-name client-name)))
+                (setf action-client (make-instance 'base-client :client-name client-name)))
 
-            ((setf actions-client (make-instance 'base-client :client-name 
+            ((setf action-client (make-instance 'base-client :client-name 
             (concatenate 'string client-name actions-name)))))
 
-        (initialize-instance actions-client))
+        (initialize-instance action-client))
     
 )
 
