@@ -9,7 +9,7 @@
     )
 
 (defmethod initialize-instance :after ((client onto-client) &key)
-    """Constructs an ontology client linked to the service ontologenius/name(str)."""
+    "Constructs an ontology client linked to the service ontologenius/name(str)."
     (let ((client-name (slot-value client 'client-name)))
         (let ((onto-client (make-instance 'client-base :client-name client-name)))
 
@@ -18,14 +18,14 @@
 )
 
 ;; (defun init-onto-client ()
-;;     """Constructs a manager client.
-;;     Can only be used in a multi-ontology mode."""
+;;     "Constructs a manager client.
+;;     Can only be used in a multi-ontology mode."
 ;;     (initialize-instance *onto-client*)
 
 ;; )
 
 ;; (defun init-onto-client (name)
-;;     """Constructs an ontology client linked to the service ontologenius/name(str)."""
+;;     "Constructs an ontology client linked to the service ontologenius/name(str)."
 ;;     (init-client name)
 ;; )
 
@@ -37,11 +37,11 @@
     ))
 
 (defun get-up (name &optional (depth -1) (selector ""))
-    """Gives all concepts below the one given in the parameter: name(str).
+    "Gives all concepts below the one given in the parameter: name(str).
     The optional depth(int) parameter can be set to limit tree propagation to a specific value.
     The default value -1 represents no propagation limitation.
     The optional selector(str) parameter can be set to only get results inheriting from the selector(str) concept.
-    The default value '' represents no restriction on the result."""
+    The default value '' represents no restriction on the result."
     (let ((param name))
         (cond 
             ((not (string= selector ""))
@@ -55,8 +55,8 @@
             ))
 
 (defun is-A (name base-class)
-    """Return true if the concept name(str) is or inherits of the concept base_class(str).
-        This function corresponds to checking if class_base is part of the result of the function getUp applies to the concept name."""
+    "Return true if the concept name(str) is or inherits of the concept base_class(str).
+        This function corresponds to checking if class_base is part of the result of the function getUp applies to the concept name."
     (let ((res (get-up  name -1 base-class)))
         (cond 
             ((eq (length res) 0)
@@ -66,10 +66,10 @@
     ))
 
 (defun get-name (name &optional (take-id t))
-    """Gives one of the label (str) of the concept name(str) that is not muted.
+    "Gives one of the label (str) of the concept name(str) that is not muted.
         The default take_id(bool) argument can be set to False if you do not want to
         consider the concept identifier as a possible default name.
-        The result of this function depends on the setting of the working language."""
+        The result of this function depends on the setting of the working language."
     ;; (let ((param name))
     ;;     (cond 
     ;;         ((eql take-id nil)
@@ -81,10 +81,10 @@
             ))
 
 (defun get-names (name &optional (take-id t))
-    """Gives all the labels (str[]) of the concept name(str) excepted the muted ones.
+    "Gives all the labels (str[]) of the concept name(str) excepted the muted ones.
         The default take_id(bool) argument can be set to False if you do not want to
         consider the concept identifier as a possible default name.
-        The result of this function depends on the setting of the working language."""
+        The result of this function depends on the setting of the working language."
     ;; (let ((param name))
     ;;     (cond 
     ;;         ((eql take-id nil)
@@ -95,10 +95,10 @@
             ))
 
 (defun get-every-names (name &optional (take-id t))
-    """Gives all the labels (str[]) of the concept name(str) even the muted ones.
+    "Gives all the labels (str[]) of the concept name(str) even the muted ones.
         The default take_id(bool) argument can be set to False if you do not want to
         consider the concept identifier as a possible default name.
-        The result of this function depends on the setting of the working language."""
+        The result of this function depends on the setting of the working language."
     ;; (let ((param name))
     ;;     (cond 
     ;;         ((eql take-id nil)
@@ -107,10 +107,10 @@
             (call "getEveryNames" (return-param name take-id)
             ))
 (defun find-concept (name &optional (take-id t))
-    """Gives all the concepts (str[]) having for label name(str).
+    "Gives all the concepts (str[]) having for label name(str).
         The default take_id(bool) argument can be set to False if you do not want
         to consider the concept identifier as a possible default name.
-        The result of this function depends on the setting of the working language."""
+        The result of this function depends on the setting of the working language."
     ;; (let ((param name))
     ;;     (cond 
     ;;         ((eql take-id nil)
@@ -120,10 +120,10 @@
             ))
 
 (defun find-sub-concept (name &optional (take-id t))
-    """Gives all the concepts (str[]) having for label a subset of name(str).
+    "Gives all the concepts (str[]) having for label a subset of name(str).
         The default take_id(bool) argument can be set to false if you do not want to
         consider the concept identifier as a possible default name.
-        The result of this function depends on the setting of the working language."""
+        The result of this function depends on the setting of the working language."
     ;; (let ((param name))
     ;;     (cond 
     ;;         ((eql take-id nil)
@@ -133,10 +133,10 @@
             ))
 
 (defun find-regex (name &optional (take-id t))
-    """Give all concepts (str[]) with a label matching the regular expression regex(str).
+    "Give all concepts (str[]) with a label matching the regular expression regex(str).
         The default take_id(bool) argument can be set to false if you do not want to consider
         the concept identifier as a possible default name.
-        The result of this function depends on the setting of the working language."""
+        The result of this function depends on the setting of the working language."
     ;; (let ((param name))
     ;;     (cond 
     ;;         ((eql take-id nil)
@@ -146,7 +146,7 @@
             ))
 
 (defun find-fuzzy (name &optional (threshold 0.5) (take-id t))
-    """Give all the names of concepts (str[]) with the lowest
+    "Give all the names of concepts (str[]) with the lowest
         edit distance with parameter name(str).
         The default take_id(bool) argument can be set to false if you do not want to
         consider the concept identifier as a possible default name.
@@ -154,7 +154,7 @@
         does not correspond to the concept identifiers but to other labels known by ontologenius.
         The minimum editing distance can be set with the threshold(double) parameter.
         This value corresponds to the number of changes to be made to pass from one
-        word to another divided by the length of the comparison word"""
+        word to another divided by the length of the comparison word"
     (let ((param (concatenate 'string name " -t" (write-to-string threshold))))
         (cond 
             ((eql take-id nil)
@@ -164,8 +164,8 @@
             ))
 
 (defun exist (name)
-    """Returns True if the concept name(str) exists in the subpart of the ontology 
-        managed by the client (i.e. class, individuals, object properties, data properties)."""
+    "Returns True if the concept name(str) exists in the subpart of the ontology 
+        managed by the client (i.e. class, individuals, object properties, data properties)."
 
             (not (string= (call-str "exist" name) "")
             ))
