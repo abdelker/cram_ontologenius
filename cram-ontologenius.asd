@@ -32,10 +32,10 @@
                                                   
 
               (:file "ontology-client" :depends-on ("package"
-                                                    "client-base"))))))
+                                                    "client-base"))
 
-              ;; (:file "action-client" :depends-on ("package"
-              ;;                                     "client-base"))
+              (:file "action-client" :depends-on ("package"
+                                                  "client-base"))))))
 
               ;; (:file "individual-client" :depends-on ("package"
               ;;                                         "manager-client"))
