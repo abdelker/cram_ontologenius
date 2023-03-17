@@ -1,5 +1,37 @@
 (in-package :onto)
 
+(defclass individual-client (onto-client)
+    (
+        (client-name
+        :initarg :client-name
+        :initform "individual/")
+
+        (individual-name
+        :initarg :individual-name
+        :initform "")
+        )
+    )
+
+(defparameter individual-client nil)
+
+(defmethod initialize-instance :after ((client individual-client) &key)
+    """Constructs an class client.Can be used in a multi-ontology mode by specifying the name of the ontology name(str).
+        For classic use, name should be defined as"""
+    (let ((individual-name (slot-value client 'individual-name))
+            (client-name (slot-value client 'client-name)))
+    
+        (cond 
+            ((string= individual-name "")
+                (setf individual-client (make-instance 'onto-client :client-name client-name)))
+
+            ((setf individual-client (make-instance 'onto-client :client-name 
+            (concatenate 'string client-name individual-name)))))
+
+        (initialize-instance individual-client))
+    
+)
+
+
 (defun init-ind-client(name)
     """Constructs an class client.
         Can be used in a multi-ontology mode by specifying the name of the ontology name(str).
