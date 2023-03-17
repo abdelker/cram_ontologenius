@@ -1,16 +1,48 @@
 (in-package :onto)
 
-(defun init-action-client(name)
+(defclass action-client (client-base)
+    (
+        (client-name
+        :initarg :client-name
+        :initform "actions/")
+
+        (action-name
+        :initarg :action-name
+        :initform "")
+        )
+    )
+
+(defparameter actions-client nil)
+
+(defmethod initialize-instance :after ((client action-client) &key)
     """Constructs an action client.
         Can be used in a multi-ontology mode by specifying the name of the ontology name(str).
         For classic use, name(str) should be defined as ''"""
-    (cond 
-            ((string= name "")
-                (init-client "actions"))
-            
-            ((init-client (concatenate 'string "actions/" name)))
+    (let ((actions-name (slot-value client 'actions-name))
+            (client-name (slot-value client 'client-name)))
+    
+        (cond 
+            ((string= actions-name "")
+                (setf actions-client (make-instance 'base-client :client-name client-name)))
 
-                ))
+            ((setf actions-client (make-instance 'base-client :client-name 
+            (concatenate 'string client-name actions-name)))))
+
+        (initialize-instance actions-client))
+    
+)
+
+;; (defun init-action-client(name)
+;;     """Constructs an action client.
+;;         Can be used in a multi-ontology mode by specifying the name of the ontology name(str).
+;;         For classic use, name(str) should be defined as ''"""
+;;     (cond 
+;;             ((string= name "")
+;;                 (init-client "actions"))
+            
+;;             ((init-client (concatenate 'string "actions/" name)))
+
+;;                 ))
 
 (defun close ()
     """Link all the concepts loaded from files and the Internet.
