@@ -7,10 +7,34 @@
 (defvar *name* nil)
 
 
-(defun init-client (name)
+
+(defclass client-base ()
+    (
+        (client-name
+        :initarg :client-name
+        :initform (error "Must supply a service name."))
+        
+        client-srv
+        ;;:initarg :client-srv
+        ;;:initform ""
+        )
+    )
+
+
+(defmethod initialize-instance :after ((client client-base) &key)
     """Constructs a ROS client linked to the service name(str)."""
-    (setf *name* name)
-    (setf *client-srv* (concatenate 'string "ontologenius/" *name* )))
+    (let ((client-name (slot-value client 'client-name)))
+        (setf (slot-value client 'client-srv)
+            (concatenate 'string "ontologenius/" client-name)
+        )
+    )
+    
+)
+
+;; (defun init-client (name)
+;;     """Constructs a ROS client linked to the service name(str)."""
+;;     (setf *name* name)
+;;     (setf *client-srv* (concatenate 'string "ontologenius/" *name* )))
 
 (defun call-client-srv (action param)
     "Function to call the ontology client service."
