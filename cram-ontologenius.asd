@@ -26,22 +26,22 @@
             (
               (:file "package")
 
-              (:file "client-base" :depends-on ("package"))
+              (:file "client-base" :depends-on ("package"))))))
 
-              (:file "manager-client" :depends-on ("package""client-base"))
+              ;; (:file "manager-client" :depends-on ("package""client-base"))
                                                   
 
-              (:file "ontology-client" :depends-on ("package"
-                                                    "client-base"))
+              ;; (:file "ontology-client" :depends-on ("package"
+              ;;                                       "client-base"))
 
-              (:file "action-client" :depends-on ("package"
-                                                  "client-base"))
+              ;; (:file "action-client" :depends-on ("package"
+              ;;                                     "client-base"))
 
-              (:file "individual-client" :depends-on ("package"
-                                                      "manager-client"))
+              ;; (:file "individual-client" :depends-on ("package"
+              ;;                                         "manager-client"))
 
-              (:file "ontology-manipulator" :depends-on ("package" "individual-client" "action-client")) 
+              ;; (:file "ontology-manipulator" :depends-on ("package" "individual-client" "action-client")) 
               
-              (:file "ontologies-manipulator" :depends-on ("package" "ontology-manipulator" "manager-client"))))))
+              ;; (:file "ontologies-manipulator" :depends-on ("package" "ontology-manipulator" "manager-client"))))))
               
   
