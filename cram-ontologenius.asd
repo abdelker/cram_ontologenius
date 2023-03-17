@@ -26,9 +26,9 @@
             (
               (:file "package")
 
-              (:file "client-base" :depends-on ("package"))))))
+              (:file "client-base" :depends-on ("package"))
 
-              ;; (:file "manager-client" :depends-on ("package""client-base"))
+              (:file "manager-client" :depends-on ("package""client-base"))))))
                                                   
 
               ;; (:file "ontology-client" :depends-on ("package"
