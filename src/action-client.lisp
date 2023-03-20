@@ -19,15 +19,15 @@
     Can be used in a multi-ontology mode by specifying the name of the ontology name(str).
     For classic use, name(str) should be defined as ''"
 
-    (let ((actions-name (slot-value client 'actions-name))
+    (let ((action-name (slot-value client 'action-name))
             (client-name (slot-value client 'client-name)))
     
         (cond 
-            ((string= actions-name "")
-                (setf action-client (make-instance 'base-client :client-name client-name)))
+            ((string= action-name "")
+                (setf action-client (make-instance 'client-base :client-name client-name)))
 
-            ((setf action-client (make-instance 'base-client :client-name 
-            (concatenate 'string client-name actions-name)))))
+            ((setf action-client (make-instance 'client-base :client-name 
+            (concatenate 'string client-name action-name)))))
 
         (initialize-instance action-client))
     
