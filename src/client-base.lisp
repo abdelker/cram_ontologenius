@@ -28,9 +28,9 @@
 (defmethod initialize-instance :after ((client client-base) &key)
     "Constructs a ROS client linked to the service name(str)."
     (let ((client-name (slot-value client 'client-name)))
-        (setf (slot-value client 'client-srv)
+      (setf *client-srv* (setf (slot-value client 'client-srv)
             (concatenate 'string "ontologenius/" client-name)
-        )
+        ))
     )
     
 )
