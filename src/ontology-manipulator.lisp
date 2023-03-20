@@ -2,8 +2,8 @@
 
 (defclass ontology-manipulator ()
     (
-        (name
-        :initarg :name
+        (onto-name
+        :initarg :onto-name
         :initform "")
         
         (service-name
@@ -16,14 +16,14 @@
         )
     )
 
-(defmethod initialize-instance :before ((onto-man ontology-manipulator) &key)
+(defmethod initialize-instance :after ((onto-man ontology-manipulator) &key)
     "Constructs a ROS client linked to the service name(str)."
 
-    (let ((name (slot-value onto-man 'name)) (service-name (slot-value onto-man 'service-name)))
+    (let ((onto-name (slot-value onto-man 'onto-name)) (service-name (slot-value onto-man 'service-name)))
             (setf (slot-value onto-man 'individual-client)
-                (make-instance 'individual-client :individual-name name))
+                (make-instance 'individual-client :individual-name onto-name))
             (setf (slot-value onto-man 'action-client)
-                (make-instance 'action-client :action-name name))
+                (make-instance 'action-client :action-name onto-name))
                         ;; ((individuals individual-client)
                         ;; (actions action-client)) onto
                         ;; (format t "got ~a, ~a~&" individuals actions)
@@ -31,11 +31,11 @@
                         ;;(setf actions (make-instance 'action-client :action-name name))
                         
         (cond 
-            ((not (string= name ""))
-                (setq service-name (concatenate 'string  "/" name))))
+            ((not (string= onto-name ""))
+                (setq service-name (concatenate 'string  "/" onto-name))))
 
-        (roslisp:wait-for-service service-name)
-        (initialize-instance onto-man)
+        ;;(roslisp:wait-for-service service-name)
+        ;;(initialize-instance onto-man)
     )
     
 )
