@@ -15,7 +15,7 @@
                :cram-process-modules 
                :cram-language-designator-support
                :cram-executive 
-               :cram-cloud-logger
+               ;;:cram-cloud-logger
                :ontologenius-srv
                :ontologenius-msg)
             
