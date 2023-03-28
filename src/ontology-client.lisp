@@ -3,19 +3,19 @@
 (defclass onto-client (client-base)
     (
         (client-name
-        :initarg :client-name
-        :initform (error "Must supply a service name."))
-        )
-)
+         :initarg :client-name
+         :initform (error "Must supply a service name."))))
+        
+
 
 (defmethod initialize-instance :after ((client onto-client) &key)
     "Constructs an ontology client linked to the service ontologenius/name(str)."
     (let ((client-name (slot-value client 'client-name)))
-        (let ((onto-client (make-instance 'client-base :client-name client-name)))
+        (let ((onto-client (make-instance 'client-base :client-name client-name))))))
 
-        (initialize-instance onto-client)))
+       ;; (initialize-instance onto-client)))
     
-)
+
 
 ;; (defun init-onto-client ()
 ;;     "Constructs a manager client.
@@ -29,13 +29,13 @@
 ;;     (init-client name)
 ;; )
 
-(defun return-param (name take-id )
+(defun return-param (name take-id)
 
     (let ((param name))
         (cond 
             ((eql take-id nil)
-                (setq param (concatenate 'string param " -i false")))))
-)
+             (setq param (concatenate 'string param " -i false"))))))
+
 
 (defun get-up (name &optional (depth -1) (selector ""))
     "Gives all concepts below the one given in the parameter: name(str).
@@ -47,14 +47,14 @@
     (let ((param name))
         (cond 
             ((not (string= selector ""))
-                (setq param (concatenate 'string param " -s " selector)))
+             (setq param (concatenate 'string param " -s " selector)))
             
             ((>= depth 0)
-                (setq param (concatenate 'string param " -d " (write-to-string depth)
-                ))))
+             (setq param (concatenate 'string param " -d " (write-to-string depth)))))
+                
 
-        (call "getUp" param))
-)
+        (call "getUp" param)))
+
 
 (defun is-A (name base-class)
     "Return true if the concept name(str) is or inherits of the concept base_class(str).
@@ -63,11 +63,11 @@
     (let ((res (get-up  name -1 base-class)))
         (cond 
             ((eq (length res) 0)
-                (values nil) )
+             (values nil))
             
             ((not (eq (length res) 0)) ;;else actually
-                (values t))))
-)
+             (values t)))))
+
 
 (defun get-name (name &optional (take-id t))
     "Gives one of the label (str) of the concept name(str) that is not muted.
@@ -79,8 +79,8 @@
     ;;         ((eql take-id nil)
     ;;             (setq param (concatenate 'string param " -i false"))))
 
-    (call-str "getName" (return-param name take-id))
-)
+    (call-str "getName" (return-param name take-id)))
+
 
 (defun get-names (name &optional (take-id t))
     "Gives all the labels (str[]) of the concept name(str) excepted the muted ones.
@@ -92,8 +92,8 @@
     ;;         ((eql take-id nil)
     ;;             (setq param (concatenate 'string param " -i false"))))
 
-    (call "getNames" (return-param name take-id))
-)
+    (call "getNames" (return-param name take-id)))
+
 
 (defun get-every-names (name &optional (take-id t))
     "Gives all the labels (str[]) of the concept name(str) even the muted ones.
@@ -105,8 +105,8 @@
     ;;         ((eql take-id nil)
     ;;             (setq param (concatenate 'string param " -i false"))))
 
-    (call "getEveryNames" (return-param name take-id))
-)
+    (call "getEveryNames" (return-param name take-id)))
+
 
 (defun find-concept (name &optional (take-id t))
     "Gives all the concepts (str[]) having for label name(str).
@@ -118,8 +118,8 @@
     ;;         ((eql take-id nil)
     ;;             (setq param (concatenate 'string param " -i false"))))
 
-    (call "find" (return-param name take-id))
-)
+    (call "find" (return-param name take-id)))
+
 
 (defun find-sub-concept (name &optional (take-id t))
     "Gives all the concepts (str[]) having for label a subset of name(str).
@@ -131,8 +131,8 @@
     ;;         ((eql take-id nil)
     ;;             (setq param (concatenate 'string param " -i false"))))
 
-    (call "findSub" (return-param name take-id))
-)
+    (call "findSub" (return-param name take-id)))
+
 
 (defun find-regex (name &optional (take-id t))
     "Give all concepts (str[]) with a label matching the regular expression regex(str).
@@ -144,8 +144,8 @@
     ;;         ((eql take-id nil)
     ;;             (setq param (concatenate 'string param " -i false"))))
 
-    (call "findRegex" (return-param name take-id))
-)
+    (call "findRegex" (return-param name take-id)))
+
 
 (defun find-fuzzy (name &optional (threshold 0.5) (take-id t))
     "Give all the names of concepts (str[]) with the lowest
@@ -161,14 +161,13 @@
     (let ((param (concatenate 'string name " -t" (write-to-string threshold))))
         (cond 
             ((eql take-id nil)
-                (setq param (concatenate 'string param " -i false"))))
+             (setq param (concatenate 'string param " -i false"))))
 
-        (call "findFuzzy" param))
-)
+        (call "findFuzzy" param)))
+
 
 (defun exist (name)
     "Returns True if the concept name(str) exists in the subpart of the ontology 
     managed by the client (i.e. class, individuals, object properties, data properties)."
 
-    (not (string= (call-str "exist" name) ""))
-)
+    (not (string= (call-str "exist" name) "")))
