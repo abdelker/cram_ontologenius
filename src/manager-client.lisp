@@ -22,14 +22,14 @@
 (defun list-inst-ono ()
     "Returns the name of the instantiated ontologies (str[])."
 
-    (call "list" "")
+    (call *manager-client* "list" "")
 )
 
 (defun add-inst-onto (name)
     "Create an ontology instance named name(str).s
     Returns False if the service call fails."
 
-    (call-nr "add" name)
+    (call-nr *manager-client* "add" name)
 )
 
 (defun copy-inst-onto (dest-name src-name)
@@ -37,14 +37,14 @@
     Returns False if the service call fails or if the copy fails."
 
     (let (( name (concatenate 'string dest-name "=" src-name)))   
-    (call-bool "add" name))
+    (call-bool *manager-client* "add" name))
 )
 
 (defun delete-inst-onto (name)
     "Delete the instance of the ontology named name(str)
     Returns False if the service call fails."
     
-    (call-nr "delete" name)
+    (call-nr *manager-client* "delete" name)
 )
 
 (defun get-difference (onto1 onto2 concept)
@@ -54,5 +54,5 @@
         The difference in inheritance knowledge between concepts is returned with the property isA."
 
     (let ((onto (concatenate 'string onto1 "|" onto2 "|" concept)))
-    (call-nr "difference" onto))
+    (call-nr *manager-client* "difference" onto))
 )
