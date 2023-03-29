@@ -8,7 +8,7 @@
 ;;         )
 ;;     )
 
-; (defparameter *onto-man*
+ (defparameter *onto-man* nil)
 ;     (make-instance 'ontology-manipulator :onto-name "pepper"))
 
 
@@ -38,18 +38,25 @@
     "Creates a new instance of ontologyManipulator identified by the name name(str).
     Returns False if the creation fails. Returns True even if the instance already exists."
 
-    (let ((*onto-man* (make-instance 'ontology-manipulator :onto-name name)))
-
-        (if (gethash name *manipulators*)
-            (values t)
+   ;; (let ((
+   (setf *onto-man* (make-instance 'ontology-manipulator :onto-name name))
+    ;;)
+        (cond 
+        ;;(if 
+         ((gethash name *manipulators*)
+        ;; (princ "here1")
+          (values t))
                 
-            (cond ((eq (add-inst-onto name) nil)
-                   (values nil))
+         ((cond ((eq (add-inst-onto name) nil)
+                 ;;   (princ "here2")
+                 (values nil))
 
-                ((progn 
+             ((progn 
                     
-                  (setf (gethash name *manipulators*) *onto-man*)
-                  (values t)))))))
+               (setf (gethash name *manipulators*) *onto-man*)
+              ;;  (princ "here3")
+               (values t)))))))
+               ;;)
 
 (defun copy-onto (dest-name src-name)
     "Creates a new instance of ontologyManipulator identified by the name dest_name(str) that manipulates a copy of 

@@ -6,14 +6,14 @@
          :initarg :client-name
          :initform (error "Must supply a service name."))))
         
-
+;;(defparameter onto-client nil)
 
 (defmethod initialize-instance :after ((client onto-client) &key)
     "Constructs an ontology client linked to the service ontologenius/name(str)."
     (let ((client-name (slot-value client 'client-name)))
         (let ((onto-client (make-instance 'client-base :client-name client-name))))))
 
-       ;; (initialize-instance onto-client)))
+      ;;  (initialize-instance onto-client))
     
 
 

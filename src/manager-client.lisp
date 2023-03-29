@@ -28,7 +28,7 @@
 (defun add-inst-onto (name)
     "Create an ontology instance named name(str).s
     Returns False if the service call fails."
-
+   ;; (princ "here manager add")(terpri)
     (call-nr "add" name)
 )
 

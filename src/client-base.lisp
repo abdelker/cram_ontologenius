@@ -4,7 +4,7 @@
 (defvar *cpt* 0)
 
 (defvar *client-srv* nil "ROS service to the ontology client")
-(defvar *name* nil)
+(defvar *client-name* nil)
 
 
 
@@ -27,10 +27,10 @@
 
 (defmethod initialize-instance :after ((client client-base) &key)
     "Constructs a ROS client linked to the service name(str)."
-    (let ((client-name (slot-value client 'client-name)))
+    (setf *client-name* (slot-value client 'client-name))
       ;;(let ((
         (setf *client-srv* (setf (slot-value client 'client-srv)
-         (concatenate 'string "ontologenius/" client-name)))))
+         (concatenate 'string "ontologenius/" *client-name*))))
          
           ;;(initialize-instance client-base))
         
@@ -40,16 +40,17 @@
 
 ;; (defun init-client (name)
 ;;     "Constructs a ROS client linked to the service name(str)."
-;;     (setf *name* name)
-;;     (setf *client-srv* (concatenate 'string "ontologenius/" *name* )))
+;;     (setf *client-name* name)
+;;     (setf *client-srv* (concatenate 'string "ontologenius/" *client-name* )))
 
 (defun call-client-srv (action param)
     "Function to call the ontology client service."
   ;;(let ((*client-srv* (make-instance 'client-base)))
-   (roslisp:call-service *client-srv*
+  (princ *client-srv*)(terpri)
+   (princ (roslisp:call-service *client-srv*
                  'ontologenius-srv:OntologeniusService
                  :action action
-                 :param param))
+                 :param param)))
                  
 
 (defun nb ()
@@ -75,15 +76,16 @@
         (progn 
             (let
                 ((response-values (roslisp:msg-slot-value (call-client-srv action param) :values)))
+                (princ "service call made")
                 (values response-values)))
 
         (roslisp::ros-rpc-error () 
             (cond
                 ((eql *verbose* t)
-                 (let ((error-message (concatenate 'string "Failure to call ontologenius/" *name*)))
+                 (let ((error-message (concatenate 'string "Failure to call ontologenius/" *client-name*)))
                       (print error-message))))
 
-            (setf *client-srv* (concatenate 'string "ontologenius/" *name*))
+            (setf *client-srv* (concatenate 'string "ontologenius/" *client-name*))
 
             (handler-case
                 (progn 
@@ -93,7 +95,7 @@
 
                      (cond
                          ((eql *verbose* t)
-                          (let ((error-message (concatenate 'string "Restored ontologenius/" *name*)))
+                          (let ((error-message (concatenate 'string "Restored ontologenius/" *client-name*)))
                                (print error-message))))
 
                      (values response-values)))
@@ -129,10 +131,10 @@
         (roslisp::ros-rpc-error () 
             (cond
                 ((eql *verbose* t)
-                 (let ((error-message (concatenate 'string "Failure to call ontologenius/" *name*)))
+                 (let ((error-message (concatenate 'string "Failure to call ontologenius/" *client-name*)))
                       (print error-message))))
 
-            (setf *client-srv* (concatenate 'string "ontologenius/" *name*))
+            (setf *client-srv* (concatenate 'string "ontologenius/" *client-name*))
 
             (handler-case
                 (progn 
@@ -142,7 +144,7 @@
 
                      (cond
                          ((eql *verbose* t)
-                          (let ((error-message (concatenate 'string "Restored ontologenius/" *name*)))
+                          (let ((error-message (concatenate 'string "Restored ontologenius/" *client-name*)))
                                (print error-message)))
                         
                          ((> (length response-values) 0)
@@ -167,38 +169,42 @@
     If the service call fails, the function returns False"
 
     (setf *cpt* (+ 1 *cpt*))
-
+  ;;  (princ "here call-nr func called")(terpri)
     (handler-case 
         (progn
+          ;;  (princ "here cb 1")(terpri)
             (let
                 ((response (call-client-srv action param)))
+                
                 (values t)))
 
         (roslisp::ros-rpc-error ()
             (cond
                 ((eql *verbose* t)
-                 (let ((error-message (concatenate 'string "Failure to call ontologenius/" *name*)))
+                 (let ((error-message (concatenate 'string "Failure to call ontologenius/" *client-name*)))
                       (print error-message))))
-         ;;(princ "i am here3")
-         (setf *client-srv* (concatenate 'string "ontologenius/" *name*))
+        ;; (princ "i am here3")
+         (setf *client-srv* (concatenate 'string "ontologenius/" *client-name*))
 
          (handler-case
              (progn
               (let
                   ((response (call-client-srv action param)))
-                 ;; (princ "i am here5")
+                 (princ "i am here5")
                (cond
                    ((eql *verbose* t)
-                    (let ((error-message (concatenate 'string "Restored ontologenius/" *name*)))
+                    (let ((error-message (concatenate 'string "Restored ontologenius/" *client-name*)))
                          (print error-message))))
 
                (values t)))
 
              (roslisp::ros-rpc-error () 
                  (cond
-                  ;;(princ "i am here6")
+                  
                   ((eql *verbose* t)
-                   (print "Failure of service restoration")))
+                   (print "Failure of service restoration")
+                 ;;  (princ "i am here6")
+                   ))
 
                  (values nil))))))
 
@@ -223,10 +229,10 @@
         (roslisp::ros-rpc-error () 
             (cond
                 ((eql *verbose* t)
-                 (let ((error-message (concatenate 'string "Failure to call ontologenius/" *name*)))
+                 (let ((error-message (concatenate 'string "Failure to call ontologenius/" *client-name*)))
                       (print error-message)))
 
-                ((setf *client-srv* (concatenate 'string "ontologenius/" *name*))))
+                ((setf *client-srv* (concatenate 'string "ontologenius/" *client-name*))))
 
             (handler-case
                 (progn 
@@ -236,7 +242,7 @@
 
                      (cond
                          ((eql *verbose* t)
-                          (let ((error-message (concatenate 'string "Restored ontologenius/" *name*)))
+                          (let ((error-message (concatenate 'string "Restored ontologenius/" *client-name*)))
                                (print error-message))))
 
                      (eql response-code 0)))

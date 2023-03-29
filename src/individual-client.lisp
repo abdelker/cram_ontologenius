@@ -61,7 +61,6 @@
     "Gives all the individuals (str[]) having the given property property(str) and pointing to the individual name(str).
     The optional selector(str) parameter can be set to only get results inheriting from the selector class.
     The default value '' represents no restriction on the result."
-    
     (let ((param (concatenate 'string name ":" property)))
         (cond 
             ((not (string= selector ""))
