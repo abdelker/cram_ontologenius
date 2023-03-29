@@ -50,7 +50,7 @@
     Before closing an ontology, exploration requests are not allowed.
     Returns False if the service call fails."
 
-    (call-nr action-client "close" "")
+    (call-nr "close" "")
 )
 
 (defun save-onto (path)
@@ -58,7 +58,7 @@
     The path(str) parameter must be of the form: my/path/to/ontology.owl
     Returns False if the service call fails."
 
-    (call-nr action-client "save" path)
+    (call-nr "save" path)
 )
 
 (defun export-onto (path)
@@ -67,20 +67,20 @@
     This function has no effect on non copied ontologies.
     Returns False if the service call fails."
 
-    (call-nr action-client "export" path)
+    (call-nr "export" path)
 )
 
 (defun set-lang (lang)
     "Sets the language of work lang(str).
     Returns False if the service call fails."
 
-    (call-nr action-client "setLang" lang)
+    (call-nr "setLang" lang)
 )
 
 (defun get-lang ()
     "Return the working language (str)."
 
-    (call-str action-client "getLang" "")
+    (call-str "getLang" "")
 )
 
 (defun add-action (uri)
@@ -88,7 +88,7 @@
     The Close function should be called after all the desired files have been loaded.
     Returns False if the service call fails."
 
-    (call-nr action-client "add" uri)
+    (call-nr "add" uri)
 )
 
 (defun fadd (file)
@@ -96,12 +96,12 @@
     The Close function should be called after all the desired files have been loaded.
     Returns False if the service call fails."
 
-(call-nr action-client "fadd" file)
+(call-nr "fadd" file)
 )
 
 (defun reset-onto ()
     "Unload all the knowledge previously loaded or learned.
     Returns False if the service call fails."
 
-(call-nr action-client "reset" "")
+(call-nr "reset" "")
 )

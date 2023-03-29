@@ -1,6 +1,6 @@
 (in-package :onto)
 
-(defclass individual-client (onto-client)
+(defclass individual-client  (onto-client)
     (
         (client-name
         :initarg :client-name
@@ -12,7 +12,7 @@
         )
     )
 
-(defparameter individual-client nil)
+(defparameter nil)
 
 (defmethod initialize-instance :after ((client individual-client) &key)
     "Constructs an class client.Can be used in a multi-ontology mode by specifying the name of the ontology name(str).
@@ -54,7 +54,7 @@
             ((not (string= selector ""))
                 (setq param (concatenate 'string param " -s " selector))))
 
-            (call individual-client "getOn" param)
+            (call "getOn" param)
             ))
 
 (defun get-from (name property &optional (selector ""))
@@ -66,7 +66,7 @@
             ((not (string= selector ""))
                 (setq param (concatenate 'string param " -s " selector))))
 
-            (call individual-client "getFrom" param))
+            (call "getFrom" param))
 )
 
 (defun get-with (indiv-from indiv-to &optional (selector "") (depth -1) )
@@ -85,25 +85,25 @@
                 (setq param (concatenate 'string param " -d " (write-to-string depth)
                 ))))
 
-            (call individual-client  "getWith" param))
+            (call  "getWith" param))
 )
 
 (defun get-related-from (property)
     "Gives all the individuals (str[]) possessing the property property(str)."
 
-    (call individual-client  "getRelatedFrom" property)
+    (call  "getRelatedFrom" property)
 )
 
 (defun get-related-on (property)
     "Gives all the individuals (str[]) pointed to by the property property(str)."
 
-    (call individual-client  "getRelatedOn" property)
+    (call  "getRelatedOn" property)
 )
 
 (defun get-related-with (name)
     "Gives all the individuals (str[]) having a property pointing to the individual name(str)."
 
-    (call individual-client  "getRelatedWith" name)
+    (call  "getRelatedWith" name)
 )
 
 (defun get-relation-from (name &optional (depth -1) )
@@ -117,7 +117,7 @@
                 (setq param (concatenate 'string param " -d " (write-to-string depth)
                 ))))
 
-            (call individual-client "getRelationFrom" param))
+            (call "getRelationFrom" param))
 )
 
 
@@ -132,14 +132,14 @@
                 (setq param (concatenate 'string param " -d " (write-to-string depth)
                 ))))
 
-        (call individual-client  "getRelationOn" param))
+        (call  "getRelationOn" param))
 )
 
 
 (defun get-relation-with (name)
     "Gives all the individuals (str[]) having a property pointing to the individual name(str)."
 
-    (call individual-client  "getRelationWith" name)
+    (call  "getRelationWith" name)
 )
 
 (defun get-domain-of (name &optional (depth -1) (selector ""))
@@ -158,7 +158,7 @@
                 (setq param (concatenate 'string param " -d " (write-to-string depth)
                 ))))
 
-        (call individual-client  "getDomainOf" param))
+        (call  "getDomainOf" param))
 )
 
 (defun get-range-of (name &optional (depth -1) (selector ""))
@@ -177,24 +177,24 @@
                 (setq param (concatenate 'string param " -d " (write-to-string depth)
                 ))))
 
-            (call individual-client  "getRangeOf" param))
+            (call  "getRangeOf" param))
 )
 
 
 (defun get-type (name)
     "Gives all the individuals (str[]) of the type of the given class name(str)."
 
-    (call individual-client  "getType" name)
+    (call  "getType" name)
 )
 
 (defun get-same (name)
     "Gives all the individuals (str[]) that are defined as being identical to the individual name(str)."
 
-    (call individual-client  "getSame" name)
+    (call  "getSame" name)
 )
 
 (defun get-distincts (name)
     "Gives all the defined individuals (str[]) as being distinct from the individual name(str)."
 
-    (call individual-client  "getDistincts" name)
+    (call  "getDistincts" name)
 )
