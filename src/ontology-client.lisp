@@ -11,9 +11,9 @@
 (defmethod initialize-instance :after ((client onto-client) &key)
     "Constructs an ontology client linked to the service ontologenius/name(str)."
     (let ((client-name (slot-value client 'client-name)))
-        (let ((onto-client (make-instance 'client-base :client-name client-name))))))
+        (let ((onto-client (make-instance 'client-base :client-name client-name)))))
 
-      ;;  (initialize-instance onto-client))
+       ;; (initialize-instance onto-client)))
     
 
 
@@ -53,7 +53,7 @@
              (setq param (concatenate 'string param " -d " (write-to-string depth)))))
                 
 
-        (call "getUp" param)))
+        (call onto-client "getUp" param)))
 
 
 (defun is-A (name base-class)
@@ -79,7 +79,7 @@
     ;;         ((eql take-id nil)
     ;;             (setq param (concatenate 'string param " -i false"))))
 
-    (call-str "getName" (return-param name take-id)))
+    (call-str onto-client "getName" (return-param name take-id)))
 
 
 (defun get-names (name &optional (take-id t))
@@ -92,7 +92,7 @@
     ;;         ((eql take-id nil)
     ;;             (setq param (concatenate 'string param " -i false"))))
 
-    (call "getNames" (return-param name take-id)))
+    (call onto-client "getNames" (return-param name take-id)))
 
 
 (defun get-every-names (name &optional (take-id t))
@@ -105,7 +105,7 @@
     ;;         ((eql take-id nil)
     ;;             (setq param (concatenate 'string param " -i false"))))
 
-    (call "getEveryNames" (return-param name take-id)))
+    (call onto-client "getEveryNames" (return-param name take-id)))
 
 
 (defun find-concept (name &optional (take-id t))
@@ -118,7 +118,7 @@
     ;;         ((eql take-id nil)
     ;;             (setq param (concatenate 'string param " -i false"))))
 
-    (call "find" (return-param name take-id)))
+    (call onto-client "find" (return-param name take-id)))
 
 
 (defun find-sub-concept (name &optional (take-id t))
@@ -131,7 +131,7 @@
     ;;         ((eql take-id nil)
     ;;             (setq param (concatenate 'string param " -i false"))))
 
-    (call "findSub" (return-param name take-id)))
+    (call onto-client "findSub" (return-param name take-id)))
 
 
 (defun find-regex (name &optional (take-id t))
@@ -144,7 +144,7 @@
     ;;         ((eql take-id nil)
     ;;             (setq param (concatenate 'string param " -i false"))))
 
-    (call "findRegex" (return-param name take-id)))
+    (call onto-client "findRegex" (return-param name take-id)))
 
 
 (defun find-fuzzy (name &optional (threshold 0.5) (take-id t))
@@ -163,11 +163,11 @@
             ((eql take-id nil)
              (setq param (concatenate 'string param " -i false"))))
 
-        (call "findFuzzy" param)))
+        (call onto-client "findFuzzy" param)))
 
 
 (defun exist (name)
     "Returns True if the concept name(str) exists in the subpart of the ontology 
     managed by the client (i.e. class, individuals, object properties, data properties)."
 
-    (not (string= (call-str "exist" name) "")))
+    (not (string= (call-str onto-client "exist" name) "")))

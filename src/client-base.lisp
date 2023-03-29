@@ -43,13 +43,14 @@
 ;;     (setf *client-name* name)
 ;;     (setf *client-srv* (concatenate 'string "ontologenius/" *client-name* )))
 
-(defun call-client-srv (action param)
+(defun call-client-srv (client action param)
     "Function to call the ontology client service."
   ;;(let ((*client-srv* (make-instance 'client-base)))
   (princ *client-srv*)(terpri)
    (princ (roslisp:call-service *client-srv*
                  'ontologenius-srv:OntologeniusService
                  :action action
+                 :param param)))
                  :param param)))
                  
 
@@ -66,7 +67,7 @@
     the failure to call the services and about their restoration."
     (setf *verbose* verbose))
 
-(defun call (action param)
+(defun call (client action param)
     "Call the service set up in the constructor of ClientBase with the request
     defined with action(str) and param(str) and returns all the results (str[]).
     If the service call fails, the function returns None" 
@@ -90,7 +91,7 @@
             (handler-case
                 (progn 
                     (let
-                        ((response-values (roslisp:msg-slot-value (call-client-srv action param) :values)))
+                        ((response-values (roslisp:msg-slot-value (call-client-srv client action param) :values)))
                         
 
                      (cond
@@ -109,7 +110,7 @@
 
                     
 
-(defun call-str (action param)
+(defun call-str (client action param)
     "Call the service set up in the constructor of ClientBase with the request
     defined with action(str) and param(str) and returns all the first result (str).
     If the service call fails, the function returns None"
@@ -119,7 +120,7 @@
     (handler-case 
         (progn 
             (let
-                ((response-values (roslisp:msg-slot-value (call-client-srv action param) :values)))
+                ((response-values (roslisp:msg-slot-value (call-client-srv client action param) :values)))
 
                 (cond 
                     ((> (length response-values) 0)
@@ -139,7 +140,7 @@
             (handler-case
                 (progn 
                     (let
-                        ((response-values (roslisp:msg-slot-value (call-client-srv action param) :values)))
+                        ((response-values (roslisp:msg-slot-value (call-client-srv client action param) :values)))
                         
 
                      (cond
@@ -163,7 +164,7 @@
                     
 
 
-(defun call-nr (action param)
+(defun call-nr (client action param)
    "Call the service set up in the constructor of ClientBase with the
     request defined with action(str) and param(str).
     If the service call fails, the function returns False"
@@ -210,7 +211,7 @@
 
                         
 
-(defun call-bool (action param)
+(defun call-bool (client action param)
     "Call the service set up in the constructor of ClientBase with the
     request defined with action(str) and param(str).
     Returns False if the service call fails or the result code of the
@@ -221,7 +222,7 @@
     (handler-case 
         (progn 
             (let
-                ((response (call-client-srv action param)))
+                ((response (call-client-srv client action param)))
                 (let ((response-code (roslisp:msg-slot-value response :code)))
                 
                  (eql response-code 0))))
@@ -237,7 +238,7 @@
             (handler-case
                 (progn 
                     (let
-                        ((response-code (roslisp:msg-slot-value (call-client-srv action param) :code)))
+                        ((response-code (roslisp:msg-slot-value (call-client-srv client action param) :code)))
                         
 
                      (cond
