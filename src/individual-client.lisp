@@ -12,7 +12,7 @@
         )
     )
 
-(defparameter nil)
+(defparameter individual-client nil)
 
 (defmethod initialize-instance :after ((client individual-client) &key)
     "Constructs an class client.Can be used in a multi-ontology mode by specifying the name of the ontology name(str).

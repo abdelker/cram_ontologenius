@@ -11,7 +11,7 @@
 (defmethod initialize-instance :after ((client onto-client) &key)
     "Constructs an ontology client linked to the service ontologenius/name(str)."
     (let ((client-name (slot-value client 'client-name)))
-        (let (((make-instance 'client-base :client-name client-name))))))
+        (let ((onto-client (make-instance 'client-base :client-name client-name))))))
 
        ;; (initialize-instance onto-client)))
     

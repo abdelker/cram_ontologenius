@@ -25,7 +25,7 @@
     
 
 
-(defmethod initialize-instance :after ((client-base) &key)
+(defmethod initialize-instance :after ((client client-base) &key)
     "Constructs a ROS client linked to the service name(str)."
     (setf *client-name* (slot-value client 'client-name))
       ;;(let ((
@@ -47,10 +47,10 @@
     "Function to call the ontology client service."
   ;;(let ((*client-srv* (make-instance 'client-base)))
   (princ *client-srv*)(terpri)
-   (princ (roslisp:call-service *client-srv*
+   (roslisp:call-service *client-srv*
                  'ontologenius-srv:OntologeniusService
                  :action action
-                 :param param)))
+                 :param param))
                  
 
 (defun nb ()
