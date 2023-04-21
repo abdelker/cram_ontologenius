@@ -29,15 +29,15 @@
     "Constructs a ROS client linked to the service name(str)."
     (setf *client-name* (slot-value client 'client-name))
       ;;(let ((
-        (setf *client-srv* (setf (slot-value client 'client-srv)
-         (concatenate 'string "ontologenius/" *client-name*))))
+    (setf *client-srv* (setf (slot-value client 'client-srv)
+                        (concatenate 'string "ontologenius/" *client-name*))))
          
-          ;;(initialize-instance client-base))
+                         ;;(initialize-instance client-base))
         
-    
-    
-
-
+(defun display-action-param (action param)
+ (write-line (format nil "The called ontologenius action: ~a" action))
+ (write-line (format nil "called with param: ~a" param)))
+   
 ;; (defun init-client (name)
 ;;     "Constructs a ROS client linked to the service name(str)."
 ;;     (setf *client-name* name)
@@ -70,13 +70,13 @@
     "Call the service set up in the constructor of ClientBase with the request
     defined with action(str) and param(str) and returns all the results (str[]).
     If the service call fails, the function returns None" 
-
+    (display-action-param action param)
     (setf *cpt* (+ 1 *cpt*))
     (handler-case 
         (progn 
             (let
                 ((response-values (roslisp:msg-slot-value (call-client-srv action param) :values)))
-                (princ "service call made")
+             ;;  (princ "service call made")
                 (values response-values)))
 
         (roslisp::ros-rpc-error () 
@@ -113,9 +113,8 @@
     "Call the service set up in the constructor of ClientBase with the request
     defined with action(str) and param(str) and returns all the first result (str).
     If the service call fails, the function returns None"
-
+    (display-action-param action param)
     (setf *cpt* (+ 1 *cpt*))
-
     (handler-case 
         (progn 
             (let
@@ -167,7 +166,7 @@
    "Call the service set up in the constructor of ClientBase with the
     request defined with action(str) and param(str).
     If the service call fails, the function returns False"
-
+    (display-action-param action param)
     (setf *cpt* (+ 1 *cpt*))
   ;;  (princ "here call-nr func called")(terpri)
     (handler-case 
@@ -202,9 +201,9 @@
                  (cond
                   
                   ((eql *verbose* t)
-                   (print "Failure of service restoration")
+                   (print "Failure of service restoration")))
                  ;;  (princ "i am here6")
-                   ))
+                   
 
                  (values nil))))))
 
@@ -215,9 +214,8 @@
     request defined with action(str) and param(str).
     Returns False if the service call fails or the result code of the
     service is different from SUCCESS."
-
+    (display-action-param action param)
     (setf *cpt* (+ 1 *cpt*))
-
     (handler-case 
         (progn 
             (let
