@@ -49,7 +49,8 @@
     "Link all the concepts loaded from files and the Internet.
     Before closing an ontology, exploration requests are not allowed.
     Returns False if the service call fails."
-
+     (initialize-instance action-client)
+     (princ action-client)
     (call-nr "close" "")
 )
 
