@@ -67,7 +67,7 @@
 (defun close-onto-man()
     "Same as the ActionClient closing function. Link all the concepts loaded from files and the Internet. Before closing an ontology, exploration requests are not allowed.
     Returns False if the service call fails."
-
+    (initialize-instance onto-man)
     (close-onto))
 
 
