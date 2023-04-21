@@ -33,28 +33,23 @@
         
         
         ((roslisp:wait-for-service "ontologenius/manage"))))
- 
+
 (defun add-onto (name)
     "Creates a new instance of ontologyManipulator identified by the name name(str).
     Returns False if the creation fails. Returns True even if the instance already exists."
 
-   (let ((*onto-man* (make-instance 'ontology-manipulator :onto-name name)))
-        (cond 
-        ;;(if 
-         ((gethash name *manipulators*)
-        ;; (princ "here1")
-          (values t))
-                
-         ((cond ((eq (add-inst-onto name) nil)
-                 ;;   (princ "here2")
-                 (values nil))
+    (let ((*onto-man* (make-instance 'ontology-manipulator :onto-name name)))
 
-             ((progn 
-                    
-               (setf (gethash name *manipulators*) *onto-man*)
-              ;;  (princ "here3")
-               (values t))))))))
-               
+        (cond ((gethash name *manipulators*)
+            (values t))
+
+            ((cond ((eq (add-inst-onto name) nil)
+                   (values nil))
+
+                ((progn 
+
+                  (setf (gethash name *manipulators*) *onto-man*)
+                  (values t))))))))
 
 (defun copy-onto (dest-name src-name)
     "Creates a new instance of ontologyManipulator identified by the name dest_name(str) that manipulates a copy of 
@@ -95,17 +90,25 @@
     "Returns an OntologyManipulator object instance named name(str).
     Returns None if no OntologyManipulator instance is named name."
 
-    (let ((*onto-man* (make-instance 'ontology-manipulator :onto-name name)))
-
-        (if (not (gethash name *manipulators*))
-            (values nil)
+   ;; (let ((*onto-man* (make-instance 'ontology-manipulator :onto-name name)))
+    ; (princ name)(terpri)
+    ; (princ *manipulators*)(terpri)
+   (cond ((not (gethash name *manipulators*))
+            (princ ">name is not in onto-man")(terpri)
+            (values nil))
+            
+             ((gethash name *manipulators*)
+             (princ ">name is in onto-man")(terpri))))
+   ;; (princ *manipulators*)(terpri)
+        ; (if (not (gethash name *manipulators*))
+        ;     (values nil)
                 
-            (if (eq (delete-inst-onto name) nil)
-                (values nil)
+        ;     ; (if (eq (delete-inst-onto name) nil)
+        ;     ;     (values nil)
 
-                (progn 
+        ;     ;     (progn 
                     
-                 (gethash name *manipulators*)))))) 
+        ;          (gethash name *manipulators*)))
 
 (defun set-verbose-onto (verbose)
     "If verbose(bool) is set to True, the clients will post messages about
